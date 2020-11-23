@@ -5,7 +5,7 @@ public class UnivFriend extends Friend {
 	private String major;
 
 	public UnivFriend(String name, String phone) {
-		super(name, phone);
+		super(name, phone); //왜 uviv와 major의 생성자가 필요없는가??
 	}
 
 	public String getUniv() {
@@ -29,6 +29,14 @@ public class UnivFriend extends Friend {
 //		super.showFriendInfo();
 		System.out.println("이름: " + super.getName()+ ", 연락처: "+ super.getPhone() + "학교: "+this.univ+"전공: "+this.major);
 	}
+
+//	@Override
+//	public void setPhone(String phone) {
+//		super.setPhone(phone);
+//		if (super.getPhone().equals(phone))
+//		System.out.println("이름: " + super.getName()+ ", 연락처: "+ super.getPhone() + "학교: "+this.univ+"전공: "+this.major);
+	}
+
 	
 
-}
+//}
