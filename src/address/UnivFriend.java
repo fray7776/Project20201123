@@ -5,7 +5,7 @@ public class UnivFriend extends Friend {
 	private String major;
 
 	public UnivFriend(String name, String phone) {
-		super(name, phone); //왜 uviv와 major의 생성자가 필요없는가??
+		super(name, phone); 
 	}
 
 	public String getUniv() {

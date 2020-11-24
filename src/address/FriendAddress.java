@@ -2,12 +2,14 @@ package address;
 
 import java.util.Scanner;
 
-public class FriendAddress {
+public class FriendAddress { // class에 바로 선언되어지는 것은 필드!(friend배열을 class에 바로 쓰면 변수 > 필드가됨)
+								// static을 쓰면 쓸 준비가 되어 있다는 뜻
 	// 주소록 생성 프로그램
 
-	public static void main(String[] args) {
-		Friend[] friends = new Friend[100];
-		Scanner scn = new Scanner(System.in);
+	static Friend[] friends = new Friend[100];
+	static Scanner scn = new Scanner(System.in);
+
+	public static void main(String[] args) { // 메소드 안에 선언되어지는 것은 변수!
 
 		while (true) {
 			System.out.println("---------------------------------");
@@ -18,85 +20,93 @@ public class FriendAddress {
 			scn.nextLine();
 
 			if (selectNo == 1) {
-				System.out.println("친구이름을 입력하세요!!");
-				String name = scn.nextLine();
-				System.out.println("전화번호 입력하세요!!");
-				String phone = scn.nextLine();
-				Friend frnd = new Friend(name, phone);
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] == null) {
-						friends[i] = frnd;
-						break; // 한건 입력하면 빠져나와야한다.. 계속 저장하기 때문
-					}
-
-				}
-
+				addFriend();
 			} else if (selectNo == 2) {
-				System.out.println("친구이름을 입력하세요!!");
-				String name = scn.nextLine();
-				System.out.println("전화번호 입력하세요!!");
-				String phone = scn.nextLine();
-				System.out.println("학교이름을 입력하세요!!");
-				String univ = scn.nextLine();
-				System.out.println("전공을 입력하세요!!");
-				String major = scn.nextLine();
-				UnivFriend frnd = new UnivFriend(name, phone);
-				frnd.setUniv(univ);
-				frnd.setMajor(major);
+				addUnivFriend();
 
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] == null) {
-						friends[i] = frnd;
-						break;
-					}
-				}
 			} else if (selectNo == 3) {
-				System.out.println("친구이름을 입력하세요!!");
-				String compname = scn.nextLine();
-				System.out.println("전화번호 입력하세요!!");
-				String compphone = scn.nextLine();
-				System.out.println("회사이름을 입력하세요!!");
-				String company = scn.nextLine();
-				System.out.println("부서정보를 입력하세요!!");
-				String department = scn.nextLine();
-				CompFriend compfrnd = new CompFriend(compname, compphone);
-				compfrnd.setCompany(company);
-				compfrnd.setDepartment(department);
-
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] == null) {
-						friends[i] = compfrnd;
-						break;
-					}
-				}
+				addCompFriend();
 
 			} else if (selectNo == 4) {
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] != null) {
-						friends[i].showFriendInfo();
-
-					}
-				}
-
+				showFriendList();
 			} else if (selectNo == 5) {
-				System.out.println("친구의 전화번호 입력해라");
-				String phone = scn.nextLine();
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] != null && phone.equals(friends[i].getPhone())) {
-						friends[i].showFriendInfo();
-
-					}
-				}
-
+				searchFriend();
 			} else if (selectNo == 6) {
 				break;
-
 			}
 
 		}
 		System.out.println("프로그램 종료");
+	}// end of main
+
+	// 1.친구등록
+	public static void addFriend() {
+		System.out.println("친구이름을 입력하세요!!");
+		String name = scn.nextLine();
+		System.out.println("전화번호 입력하세요!!");
+		String phone = scn.nextLine();
+		Friend frnd = new Friend(name, phone);
+		insertFriend(frnd);
+	}
+
+	// 2.학교친구
+	public static void addUnivFriend() {
+		System.out.println("친구이름을 입력하세요!!");
+		String name = scn.nextLine();
+		System.out.println("전화번호 입력하세요!!");
+		String phone = scn.nextLine();
+		System.out.println("학교이름을 입력하세요!!");
+		String univ = scn.nextLine();
+		System.out.println("전공을 입력하세요!!");
+		String major = scn.nextLine();
+		UnivFriend frnd = new UnivFriend(name, phone);
+		frnd.setUniv(univ);
+		frnd.setMajor(major);
+		insertFriend(frnd);
+	}
+
+	// 3.회사친구
+	public static void addCompFriend() {
+		System.out.println("친구이름을 입력하세요!!");
+		String compname = scn.nextLine();
+		System.out.println("전화번호 입력하세요!!");
+		String compphone = scn.nextLine();
+		System.out.println("회사이름을 입력하세요!!");
+		String company = scn.nextLine();
+		System.out.println("부서정보를 입력하세요!!");
+		String department = scn.nextLine();
+		CompFriend frnd = new CompFriend(compname, compphone);
+		frnd.setCompany(company);
+		frnd.setDepartment(department);
+		insertFriend(frnd);
+	}
+
+	// 4.리스트
+	public static void showFriendList() {
+		for (int i = 0; i < friends.length; i++) {
+			if (friends[i] != null) {
+				friends[i].showFriendInfo();
+
+			}
+		}
 
 	}
+
+	// 5.한 건 조회
+	public static void searchFriend() {
+
+		System.out.println("친구의 전화번호 입력해라");
+		String phone = scn.nextLine();
+		for (int i = 0; i < friends.length; i++) {
+			if (phone.equals(friends[i].getPhone())) {
+				friends[i].showFriendInfo();
+				break;
+
+			}
+		}
+	}
+// end of class
+	// 6.함수
 
 //		Friend f1 = new Friend ("친구1","11-1111");
 //		CompFriend f2 = new CompFriend ("친구2","22-2222");
@@ -109,8 +119,15 @@ public class FriendAddress {
 //		f1.showFriendInfo();
 //		f2.showFriendInfo();
 //		f3.showFriendInfo();
-	// end of main
-
-}// end of class
 
 //메뉴 6번 연락처넣으면 showinfo 다 나오게 
+	public static void insertFriend(Friend frnd) {
+
+		for (int i = 0; i < friends.length; i++) {
+			if (friends[i] == null) {
+				friends[i] = frnd;
+				break;
+			}
+		}
+	}
+}
