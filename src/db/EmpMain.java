@@ -13,8 +13,8 @@ public class EmpMain {
 			System.out.println("1.사원정보 | 2.부서정보 | 3.종료 | 4.사원입력");
 			System.out.println("---------------------------------");
 			System.out.println("선택 > ");
-			int selectNo = scn.nextInt();
-			scn.nextLine();
+			int selectNo = scn.nextInt();scn.nextLine();
+			
 			if (selectNo == 1) {
 				EmpDAO dao = new EmpDAO();
 				Employee[] employees = dao.getEmpList();
