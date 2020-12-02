@@ -28,8 +28,7 @@ public class InterfaceExample2 { //익명선언
 			};
 		cal.multi(3);
 		
-		     cal =  
-				(a) -> {
+		     cal = (a) -> {
 					int result = a*a;
 					System.out.println(result);
 				};
