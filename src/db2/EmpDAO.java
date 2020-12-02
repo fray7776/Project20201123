@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import common.DAO;
 
@@ -139,4 +140,37 @@ public class EmpDAO { // 아래 네가지는 필드로 선언, 계속 쓸거니�
 		}
 
 	}
+	
+	//부서별 조회
+	public List<EmployeeVO> getDeptList(String dept) {
+		conn = DAO.getConnection();
+		sql = "SELECT* FROM emp1\r\n"
+				+ "WHERE department_id = (SELECT department_id FROM departments WHERE department_name='"+dept+"')";
+		//'"+dept+"' 이거를 변수로 처리해줘서 앞의 sql 쿼리랑 이어주기 위해 +사용
+		List<EmployeeVO> list = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				EmployeeVO vo = new EmployeeVO();
+				vo.setEmployeeId(rs.getInt("employee_id"));
+				vo.setFirstName(rs.getString("first_name"));
+				vo.setLastName(rs.getString("last_name"));
+				vo.seteMail(rs.getString("email"));
+				vo.setPhoneNumber(rs.getString("phone_number"));
+				vo.setHireDate(rs.getString("hire_date"));
+				vo.setJobId(rs.getString("job_id"));
+				vo.setSalary(rs.getInt("salary"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return list;
+		}
+		return list;
+	}
+
+		
+	 
 }

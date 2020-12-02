@@ -23,83 +23,93 @@ public class EmpMain {
 		Scanner scn = new Scanner(System.in);
 		EmpService service = new EmpServiceImpl();
 		while (true) {
-			
+
 			System.out.println("=================================================");
-            System.out.println("1.전체조회 | 2.검색 | 3.입력 | 4.수정 | 5.삭제 | 6.종료");
+			System.out.println("1.전체조회 | 2.검색 | 3.입력 | 4.수정 | 5.삭제 | 6.종료 | 7.부서별 조회");
 			System.out.println("=================================================");
 			System.out.println("선택> ");
-			int selectNo = scn.nextInt();
-			if(selectNo ==1) {
+			int selectNo = scn.nextInt();scn.nextLine();
+			if (selectNo == 1) {
 				List list = service.getEmpList();
-				for(Object vo : list) {
-					EmployeeVO emp = (EmployeeVO)vo;
+				for (Object vo : list) {
+					EmployeeVO emp = (EmployeeVO) vo;
 					emp.showEmpInfo();
 				}
-				
-			}else if(selectNo ==2) {
+
+			} else if (selectNo == 2) {
 				System.out.println("사원번호를 입력하세요~~");
 				int empId = scn.nextInt();
 				EmployeeVO vo = service.getEmp(empId);
 				vo.showEmpInfo();
-				
-			}else if(selectNo ==3) {
+
+			} else if (selectNo == 3) {
 				System.out.println("사원 사원id를 입력하세요~~");
-				int empId = scn.nextInt();scn.nextLine();
+				int empId = scn.nextInt();
+				scn.nextLine();
 				System.out.println("사원 이름을 입력하세요~~");
-				String firstName =scn.nextLine();
+				String firstName = scn.nextLine();
 				System.out.println("사원 성을 입력하세요~~");
-				String lastName =scn.nextLine();
+				String lastName = scn.nextLine();
 				System.out.println("이메일을 입력하세요~~");
-				String eMail =scn.nextLine();
+				String eMail = scn.nextLine();
 				System.out.println("폰번호를 입력하세요~~");
-				String phoneNumber =scn.nextLine();
+				String phoneNumber = scn.nextLine();
 				System.out.println("입사날짜를 입력하세요~~");
-				String hireDate =scn.nextLine();
+				String hireDate = scn.nextLine();
 				System.out.println("부서id를 입력하세요~~");
-				String jobId =scn.nextLine();
+				String jobId = scn.nextLine();
 				System.out.println("급여를 입력하세요~~");
 				int salary = scn.nextInt();
-				EmployeeVO vo = new EmployeeVO(empId, firstName, lastName,
-						eMail, phoneNumber,
-						hireDate, jobId, salary);
+				EmployeeVO vo = new EmployeeVO(empId, firstName, lastName, eMail, phoneNumber, hireDate, jobId, salary);
 				service.insertEmp(vo);
-						
-			}else if(selectNo ==4) {
+
+			} else if (selectNo == 4) {
 				System.out.println("수정할 사원번호 입력하세요~~");
-				int empId = scn.nextInt();scn.nextLine();
+				int empId = scn.nextInt();
+				scn.nextLine();
 				System.out.println("수정할 이메일 입력하세요~~");
 				String email = scn.nextLine();
 				System.out.println("수정할 전화번호 입력하세요~~");
 				String PhoneNo = scn.nextLine();
 				System.out.println("수정할 급여를 입력하세요~~");
 				String salary = scn.nextLine();
-				if(salary == null || salary.equals(""))
+				if (salary == null || salary.equals(""))
 					salary = "0";
 				int sal = Integer.parseInt(salary);
-				
-				
+
 				EmployeeVO vo = new EmployeeVO();
 				vo.setEmployeeId(empId);
 				vo.seteMail(email);
 				vo.setPhoneNumber(PhoneNo);
 				vo.setSalary(sal);
-				
+
 				service.updateEmp(vo);
-				
-			}else if(selectNo ==5) {
+
+			} else if (selectNo == 5) {
 				System.out.println("삭제할 사원id를 입력하시오");
-				int empId = scn.nextInt();scn.nextLine();
+				int empId = scn.nextInt();
+				scn.nextLine();
 				EmployeeVO vo = service.getEmp(empId);
 				vo.showEmpInfo();
-				
+
 				service.deleteEmp(empId);
-				
-			}else if(selectNo ==6) {
+
+			} else if (selectNo == 6) {
 				break;
+			} else if (selectNo == 7) {
+				System.out.println("조회할 부서이름을 입력하시오");
+				System.out.println("부서이름 > ");
+				String dept = scn.nextLine();
+				List<EmployeeVO> list = service.getDeptList(dept); // 앞에 String dept를 해줘서 여기선 할필요 x
+				for (Object vo : list) {
+					EmployeeVO emp = (EmployeeVO) vo;
+					emp.showEmpInfo();
+				}
 			}
+			
+
 		}
 		System.out.println("프로그램 종료!!!!");
 
 	}
-
 }

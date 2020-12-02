@@ -38,4 +38,9 @@ public class EmpServiceImpl implements EmpService {
 		
 	}
 
+	@Override
+	public List<EmployeeVO> getDeptList(String dept) {
+		return dao.getDeptList(dept);
+	}
+
 }
